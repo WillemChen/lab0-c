@@ -15,6 +15,7 @@ queue_t *q_new()
     /* What if malloc returned NULL? */
     if (q != NULL) {
         q->head = NULL;
+        q->tail = NULL;
         q->size = 0;
     }
     return q;
@@ -49,7 +50,7 @@ bool q_insert_head(queue_t *q, char *s)
 {
     list_ele_t *newh = NULL;
     /* What should you do if the q is NULL? */
-    if (q == NULL || s == NULL) {
+    if (q == NULL) {
         return false;
     }
 
@@ -88,7 +89,7 @@ bool q_insert_tail(queue_t *q, char *s)
 {
     /*  You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
-    if (q == NULL || s == NULL) {
+    if (q == NULL) {
         return false;
     }
     list_ele_t *newh = NULL;
@@ -97,14 +98,13 @@ bool q_insert_tail(queue_t *q, char *s)
         return false;
     }
     size_t len = strlen(s);
-    char *tmp = malloc(sizeof(char) * (len + 1));
-    if (tmp == NULL) {
+    newh->value = malloc(len + 1);
+    if (newh->value == NULL) {
         free(newh);
         return false;
     }
-    strncpy(tmp, s, len);
-    tmp[len] = '\0';
-    newh->value = tmp;
+    strncpy(newh->value, s, len);
+    newh->value[len] = '\0';
     newh->next = NULL;
     if (q->size == 0) {
         q->head = newh;
@@ -181,7 +181,6 @@ void q_reverse(queue_t *q)
         next_ele = tmp->next;
         tmp->next = prev_ele;
         prev_ele = tmp;
-
     }
     q->tail = q->head;
     q->head = tmp;
