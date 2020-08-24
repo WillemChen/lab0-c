@@ -58,6 +58,7 @@ bool q_insert_head(queue_t *q, char *s)
     newh->value = tmp;
     newh->next = q->head;
     q->head = newh;
+    q->size += 1;
     return true;
 }
 
@@ -73,6 +74,7 @@ bool q_insert_tail(queue_t *q, char *s)
     /* TODO: You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
     /* TODO: Remove the above comment when you are about to implement. */
+    q->size += 1;
     return false;
 }
 
