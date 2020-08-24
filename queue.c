@@ -15,6 +15,7 @@ queue_t *q_new()
     /* What if malloc returned NULL? */
     if (q != NULL) {
         q->head = NULL;
+        q->size = 0;
     }
     return q;
 }
@@ -59,6 +60,9 @@ bool q_insert_head(queue_t *q, char *s)
     newh->value = tmp;
     newh->next = q->head;
     q->head = newh;
+    if (q->size == 0) {
+        q->tail = newh;
+    }
     q->size += 1;
     return true;
 }
@@ -92,9 +96,14 @@ bool q_insert_tail(queue_t *q, char *s)
     tmp[len] = '\0';
     newh->value = tmp;
     newh->next = NULL;
-    q->tail->next = newh;
+    if (q->size == 0) {
+        q->head = newh;
+    } else {
+        q->tail->next = newh;
+    }
+    q->tail = newh;
     q->size += 1;
-    return false;
+    return true;
 }
 
 /*
