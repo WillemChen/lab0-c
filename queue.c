@@ -36,7 +36,7 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
-    list_ele_t *newh;
+    list_ele_t *newh = NULL;
     /* What should you do if the q is NULL? */
     if (q == NULL) {
         return false;
@@ -71,9 +71,27 @@ bool q_insert_head(queue_t *q, char *s)
  */
 bool q_insert_tail(queue_t *q, char *s)
 {
-    /* TODO: You need to write the complete code for this function */
+    /*  You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
-    /* TODO: Remove the above comment when you are about to implement. */
+    if (q == NULL) {
+        return false;
+    }
+    list_ele_t *newh = NULL;
+    newh = malloc(sizeof(list_ele_t));
+    if (newh == NULL) {
+        return false;
+    }
+    int len = strlen(s);
+    char *tmp = malloc(sizeof(char) * (len + 1));
+    if (tmp == NULL) {
+        free(newh);
+        return false;
+    }
+    strncpy(tmp, s, len);
+    tmp[len] = '\0';
+    newh->value = tmp;
+    newh->next = NULL;
+    q->tail->next = newh;
     q->size += 1;
     return false;
 }
