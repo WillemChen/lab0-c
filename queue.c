@@ -38,9 +38,10 @@ bool q_insert_head(queue_t *q, char *s)
 {
     list_ele_t *newh = NULL;
     /* What should you do if the q is NULL? */
-    if (q == NULL) {
+    if (q == NULL || s == NULL) {
         return false;
     }
+
     newh = malloc(sizeof(list_ele_t));
     if (newh == NULL) {
         return false;
@@ -73,7 +74,7 @@ bool q_insert_tail(queue_t *q, char *s)
 {
     /*  You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
-    if (q == NULL) {
+    if (q == NULL || s == NULL) {
         return false;
     }
     list_ele_t *newh = NULL;
@@ -81,7 +82,7 @@ bool q_insert_tail(queue_t *q, char *s)
     if (newh == NULL) {
         return false;
     }
-    int len = strlen(s);
+    size_t len = strlen(s);
     char *tmp = malloc(sizeof(char) * (len + 1));
     if (tmp == NULL) {
         free(newh);
@@ -106,9 +107,24 @@ bool q_insert_tail(queue_t *q, char *s)
  */
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
-    /* TODO: You need to fix up this code. */
-    /* TODO: Remove the above comment when you are about to implement. */
+    /*  You need to fix up this code. */
+    if (q == NULL || q->size == 0) {
+        return false;
+    }
+    list_ele_t *tmp = q->head;
     q->head = q->head->next;
+    q->size -= 1;
+    size_t len = strlen(tmp->value);
+    if (sp != NULL && len > 0) {
+        if (len > bufsize - 1) {
+            len = bufsize - 1;
+            strncpy(sp, tmp->value, bufsize - 1);
+        }
+        strncpy(sp, tmp->value, len);
+        sp[len] = '\0';
+    }
+    free(tmp->value);
+    free(tmp);
     return true;
 }
 
