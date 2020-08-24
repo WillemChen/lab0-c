@@ -1,3 +1,5 @@
+# 開發紀錄
+https://hackmd.io/t5uO3AiWRdSJlMyPbTl6jw
 # lab0-c
 Assessing Your C Programming Skills
 
